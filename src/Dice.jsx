@@ -5,7 +5,7 @@ import { useTexture } from "@react-three/drei";
 
 const Dice = ({ isRolling, setIsRolling, index }) => {
   const [key, setKey] = useState(0);
-  const initialX = index === 0 ? -0.75 : 0.75; // Separate the initial positions slightly
+  const initialX = index === 0 ? -1.5 : 1.5; // Separate the initial positions slightly
   const [ref, api] = useBox(() => ({
     mass: 1,
     position: [initialX, 2, 0], // Lower initial position

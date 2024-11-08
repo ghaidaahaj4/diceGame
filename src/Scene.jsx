@@ -1,17 +1,21 @@
 // src/Scene.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import PhysicsProvider from "./PhysicsProvider";
 import Dice from "./Dice";
 import Ground from "./Ground";
+import diceSound from "./assets/diceSound.mp3";
 
 const Scene = () => {
   const [isRolling, setIsRolling] = useState(false);
 
   const handleRollDice = () => {
     setIsRolling(true);
-    setTimeout(() => setIsRolling(false), 1000); // Reset after 1 second
+    setTimeout(() => {
+      setIsRolling(false);
+      new Audio(diceSound).play();
+    }, 1000); // Reset after 1 second
   };
 
   // Add full screen styles

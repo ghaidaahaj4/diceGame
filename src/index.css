@@ -12,7 +12,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -64,5 +72,39 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+header {
+  background-color: rgba(245, 245, 245, 0.708);
+  width: 100vw;
+  height: fit-content;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Jersey 20", sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .icon {
+    color: rgb(160, 43, 43);
+    font-size: 5rem;
+    margin-right: 2vw;
+  }
+}
+.gameDescription {
+  font-family: "Jersey 20", sans-serif;
+  font-size: larger;
+  justify-self: center;
+  width: 70vw;
+  height: fit-content;
+  border-radius: 10vh;
+  padding: 4vh 4vw 4vh 4vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 20vh;
+  button {
+    width: 40vw;
+    justify-self: center;
+    background-color: rgb(160, 43, 43);
   }
 }

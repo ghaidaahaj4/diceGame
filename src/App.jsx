@@ -1,11 +1,13 @@
 // src/App.js
-import React from "react";
-import Scene from "./Scene";
-
+// import Scene from "./components/DiceStuff/Scene";
+import MyHeader from "./components/MyHeader";
+import Landing from "./components/Landing";
 function App() {
   return (
     <div className="App">
-      <Scene />
+      <MyHeader />
+      <Landing />
+      {/* <Scene /> */}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useBox } from "@react-three/cannon";
 import { useTexture } from "@react-three/drei";
+import Background from "three/src/renderers/common/Background.js";
 
 const Dice = ({ isRolling, setIsRolling, index }) => {
   const [key, setKey] = useState(0);

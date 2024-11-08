@@ -13,8 +13,12 @@ const Ground = () => {
   }));
   return (
     <mesh ref={ref}>
-      <planeGeometry args={[8, 8]} /> {/* Adjusted size to provide padding */}
-      <meshStandardMaterial opacity={0.3} />
+      <planeGeometry args={[8, 8]} />
+      <meshStandardMaterial
+        // color="#a9a9a9" // Gray color
+        transparent={true}
+        opacity={0} // 0 is fully transparent
+      />{" "}
     </mesh>
   );
 };

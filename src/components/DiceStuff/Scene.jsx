@@ -1,28 +1,42 @@
-// src/Scene.js
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import PhysicsProvider from "./PhysicsProvider";
 import Dice from "./Dice";
 import Ground from "./Ground";
-import diceSound from "./assets/diceSound.mp3";
+import diceSound from "../../assets/diceSound.mp3";
 
-const Scene = () => {
+const Scene = ({ roll }) => {
   const [isRolling, setIsRolling] = useState(false);
+  const [showButton, setShowButton] = useState(true); // Handle button visibility
 
   const handleRollDice = () => {
-    setIsRolling(true);
+    setIsRolling(true); // Start rolling
+    new Audio(diceSound).play(); // Play sound
+
+    // Simulate rolling animation duration (1 second)
     setTimeout(() => {
-      setIsRolling(false);
-      new Audio(diceSound).play();
-    }, 1000); // Reset after 1 second
+      setIsRolling(false); // End rolling after animation
+    }, 1000);
   };
 
-  // Add full screen styles
   useEffect(() => {
+    // Set full-screen styles on mount
     document.body.style.margin = "0";
     document.body.style.overflow = "hidden";
-  }, []);
+
+    // Automatically roll dice if 'roll' is 'auto'
+    if (roll === "auto") {
+      setShowButton(false); // Hide the button
+      handleRollDice(); // Trigger the dice roll automatically
+    }
+
+    return () => {
+      // Reset body styles on unmount
+      document.body.style.margin = "";
+      document.body.style.overflow = "";
+    };
+  }, [roll]);
 
   return (
     <div style={{ height: "100vh", width: "100vw", position: "relative" }}>
@@ -31,7 +45,7 @@ const Scene = () => {
           position: [0, 10, 0],
           rotation: [-Math.PI / 2, 0, 0],
           fov: 75,
-        }} // Adjusted fov for better small screen fit
+        }}
       >
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
@@ -40,10 +54,10 @@ const Scene = () => {
           <Dice isRolling={isRolling} setIsRolling={setIsRolling} index={1} />
           <Ground />
         </PhysicsProvider>
-        <OrbitControls enableZoom={false} enableRotate={false} />{" "}
-        {/* Disable zoom and rotation */}
+        <OrbitControls enableZoom={false} enableRotate={false} />
         <Environment preset="sunset" />
       </Canvas>
+
       <div
         style={{
           position: "absolute",
@@ -53,14 +67,15 @@ const Scene = () => {
           textAlign: "center",
         }}
       >
-        <h1>3D Dice Roller</h1>
-        <button
-          onClick={handleRollDice}
-          disabled={isRolling}
-          style={{ marginTop: "10px" }}
-        >
-          Roll Dice
-        </button>
+        {showButton && (
+          <button
+            onClick={handleRollDice}
+            disabled={isRolling}
+            style={{ marginTop: "10px" }}
+          >
+            Roll Dice
+          </button>
+        )}
       </div>
     </div>
   );

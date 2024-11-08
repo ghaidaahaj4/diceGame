@@ -12,9 +12,10 @@ const Scene = ({ roll }) => {
 
   const handleRollDice = () => {
     setIsRolling(true); // Start rolling
-    new Audio(diceSound).play(); // Play sound
+    if (roll !== "auto") {
+      new Audio(diceSound).play();
+    }
 
-    // Simulate rolling animation duration (1 second)
     setTimeout(() => {
       setIsRolling(false); // End rolling after animation
     }, 1000);

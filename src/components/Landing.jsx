@@ -1,48 +1,73 @@
-import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Scene from "./DiceStuff/Scene";
-import diceSound from "../assets/diceSound.mp3";
+import { useState } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+
 export default function Landing() {
-  const ReadGameRules = () => {
-    new Audio(diceSound).play();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const togglePopup = (bool) => {
+    setIsOpen(bool);
   };
 
   return (
     <div className="home">
-      <div
-        style={{
-          position: "absolute",
-          top: "-10vh",
-
-          left: "0",
-          right: "0",
-
-          zIndex: -3,
-        }}
-      >
+      <div className="SceneInhome">
         <Scene roll="auto" />
       </div>
       <div className="buttonsmain">
         <button>Start The Game</button>
-
-        <Popup
-          trigger={<button onClick={ReadGameRules}>Read Game Rules</button>}
-          position="center"
-        >
-          <div>
-            <h1>Game Rulles</h1>
-            <p>
-              RollDiceGame is a thrilling two-player game played in rounds. Each
-              player rolls two dice as many times as they want during their
-              turn. The results are added to their round's score. However, if a
-              player rolls a double six, they lose their entire round's score.
-              Players can choose to 'Hold', adding their round's score to their
-              global score. The first player to reach 100 points wins the game!
-            </p>
-          </div>
-          <button>Click here</button>
-        </Popup>
+        <button onClick={() => togglePopup(true)}>Read Game Rules</button>
+        {isOpen && (
+          <Popup
+            open={isOpen}
+            onClose={() => togglePopup(false)}
+            position="center"
+            contentStyle={{
+              width: "70%",
+              height: "50vh",
+              overflow: "scroll",
+              borderRadius: "10vh",
+              position: "fixed",
+              bottom: "20vh",
+              righ: "15vw",
+              left: "15vw",
+              border: "1vh dotted #da0037",
+            }}
+          >
+            <div className="GameRulles">
+              <h1>Game Rulles</h1>
+              <ul>
+                <li>
+                  Two-Player Game in Rounds: Each player takes turns rolling two
+                  dice.
+                </li>
+                <li>
+                  Rolling Rules: Players can roll as many times as they like in
+                  a turn, adding each roll's total to their round score.
+                </li>
+                <li>
+                  Double Six Penalty: Rolling double sixes causes the player to
+                  lose their entire round score.
+                </li>
+                <li>
+                  'Hold' Option: Players can choose to 'Hold,' adding their
+                  round score to their total score and ending their turn.
+                </li>
+                <li>
+                  Winning Condition: The first player to reach a total score of
+                  the pre-chosen points wins!
+                </li>
+              </ul>
+              <button className="close" onClick={() => togglePopup(false)}>
+                <FontAwesomeIcon className="icon" icon={faTimes} />
+                close
+              </button>
+            </div>
+          </Popup>
+        )}
       </div>
     </div>
   );

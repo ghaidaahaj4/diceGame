@@ -1,11 +1,10 @@
+/* eslint-disable react/prop-types */
 import Slider from "react-slider";
 import { useState } from "react";
 import Typewriter from "typewriter-effect";
-export default function StartPage() {
-  const [value, setValue] = useState(50);
-  const [player1, setPlayer1] = useState("");
-  const [player2, setPlayer2] = useState("");
+export default function StartPage(props) {
   const [notification, showNotification] = useState("");
+  let { player1, player2, value, setPlayer1, setPlayer2, setValue } = props;
   function handleSliderChange(val) {
     setValue(val);
   }
@@ -31,8 +30,8 @@ export default function StartPage() {
             autoStart: true,
             loop: false,
 
-            deleteSpeed: 1000000000000000,
-            backSpeed: 1000000000000000,
+            deleteSpeed: 10000000000000000,
+            backSpeed: 10000000000000000,
           }}
         />
         {notification && <p className="notification">MUST ENTER NAMES</p>}

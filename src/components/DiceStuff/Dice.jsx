@@ -1,16 +1,16 @@
-// src/Dice.js
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useBox } from "@react-three/cannon";
 import { useTexture } from "@react-three/drei";
-import Background from "three/src/renderers/common/Background.js";
+import * as THREE from "three";
 
 const Dice = ({ isRolling, setIsRolling, index }) => {
   const [key, setKey] = useState(0);
-  const initialX = index === 0 ? -1.5 : 1.5; // Separate the initial positions slightly
+  const [rollingFinished, setRollingFinished] = useState(false);
+  const initialX = index === 0 ? -1.5 : 1.5;
   const [ref, api] = useBox(() => ({
     mass: 1,
-    position: [initialX, 2, 0], // Lower initial position
-    args: [1.5, 1.5, 1.5], // Dice size
+    position: [initialX, 2, 0],
+    args: [1.5, 1.5, 1.5],
     onCollide: () => setIsRolling(false),
     key: key,
   }));
@@ -24,9 +24,19 @@ const Dice = ({ isRolling, setIsRolling, index }) => {
     "/textures/dice6.png",
   ]);
 
+  const faceCenters = [
+    new THREE.Vector3(0, 0.75, 0),
+    new THREE.Vector3(0, -0.75, 0),
+    new THREE.Vector3(0.75, 0, 0),
+    new THREE.Vector3(-0.75, 0, 0),
+    new THREE.Vector3(0, 0, 0.75),
+    new THREE.Vector3(0, 0, -0.75),
+  ];
+
+  const correctedFaceMapping = [3, 4, 1, 2, 5, 6];
+
   useEffect(() => {
     if (isRolling) {
-      // Ensure dice starts from a lower height and falls within the middle bounds
       api.position.set(initialX, 2, 0);
       api.velocity.set((Math.random() - 0.5) * 2, 5, (Math.random() - 0.5) * 2);
       api.angularVelocity.set(
@@ -34,10 +44,45 @@ const Dice = ({ isRolling, setIsRolling, index }) => {
         Math.random() * 10,
         Math.random() * 10
       );
-      // Force a re-render to ensure the position is reset
       setKey((prevKey) => prevKey + 1);
+      setRollingFinished(false);
     }
   }, [isRolling, api]);
+
+  useEffect(() => {
+    const unsubscribeVelocity = api.velocity.subscribe((velocity) => {
+      const speed = Math.sqrt(
+        velocity[0] ** 2 + velocity[1] ** 2 + velocity[2] ** 2
+      );
+
+      if (speed < 0.1 && !rollingFinished) {
+        const positions = faceCenters.map((center) => {
+          const worldPos = new THREE.Vector3();
+          ref.current.localToWorld(worldPos.copy(center));
+          return worldPos;
+        });
+
+        let maxY = -Infinity;
+        let upwardFaceIndex = -1;
+
+        for (let i = 0; i < positions.length; i++) {
+          if (positions[i].y > maxY) {
+            maxY = positions[i].y;
+            upwardFaceIndex = i;
+          }
+        }
+
+        const correctedFaceIndex = correctedFaceMapping[upwardFaceIndex];
+        console.log("Final upward face:", correctedFaceIndex);
+
+        setRollingFinished(true);
+      }
+    });
+
+    return () => {
+      unsubscribeVelocity(); // Clean up to prevent memory leaks
+    };
+  }, [api, rollingFinished, textures]);
 
   return (
     <mesh ref={ref}>

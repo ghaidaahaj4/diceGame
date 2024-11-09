@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
@@ -15,7 +16,6 @@ const Scene = ({ roll }) => {
     if (roll !== "auto") {
       new Audio(diceSound).play();
     }
-
     setTimeout(() => {
       setIsRolling(false); // End rolling after animation
     }, 1000);
@@ -73,11 +73,7 @@ const Scene = ({ roll }) => {
         )}
       </div>
       <div className="ButtonInScene2">
-        {showButton && (
-          <button onClick={console.log("hi")} disabled={isRolling}>
-            HOLD
-          </button>
-        )}
+        {showButton && <button disabled={isRolling}>HOLD</button>}
       </div>
     </div>
   );

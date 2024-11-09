@@ -30,7 +30,6 @@ export default function StartPage(props) {
     if (!player1 || !player2) {
       showNotification("ENTER PLAYER NAMES");
     } else {
-      console.log(doneSetting);
       setDoneSettings(true);
     }
   }

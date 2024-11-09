@@ -40,7 +40,13 @@ const Scene = ({ roll }) => {
   }, [roll]);
 
   return (
-    <div style={{ height: "100vh", width: "100vw", position: "relative" }}>
+    <div
+      style={{
+        height: roll ? "100vh" : "100%",
+        width: roll ? "100vh" : "100%",
+        position: "relative",
+      }}
+    >
       <Canvas
         camera={{
           position: [0, 10, 0],

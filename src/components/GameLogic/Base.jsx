@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Landing from "../LandingPage/Landing";
 import StartPage from "./StartPage";
+import Game from "./Game";
 export default function Base() {
   const [game, StartGame] = useState(false);
   const [goal, setGoal] = useState(50);
@@ -26,7 +27,7 @@ export default function Base() {
           setDoneSettings={setDoneSettings}
         />
       )}
-      {doneSettings && <h1>ho</h1>}
+      {doneSettings && <Game />}
     </div>
   );
 }

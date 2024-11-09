@@ -112,7 +112,17 @@ header {
     z-index: -1;
   }
 }
-
+.SceneInGame {
+  width: 30vw;
+  height: 50vh;
+  background-color: #ff0241;
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .GameRulles {
   font-family: "Jersey 20", sans-serif;
   color: #1a1a1a;
@@ -196,5 +206,27 @@ form {
   .notification {
     background-color: #da0037;
     color: #ddd;
+  }
+}
+.game {
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.smaller {
+  margin: 0;
+  width: fit-content;
+  padding: 2vh 2vw;
+  background-color: #da003750;
+  border-radius: 3vh;
+  h2 {
+    color: #da0037;
+  }
+  h3 {
+    color: yellow;
+  }
+  h4 {
+    color: gray;
   }
 }

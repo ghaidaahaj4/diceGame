@@ -4,7 +4,17 @@ import { useState } from "react";
 import Typewriter from "typewriter-effect";
 export default function StartPage(props) {
   const [notification, showNotification] = useState("");
-  let { player1, player2, value, setPlayer1, setPlayer2, setValue } = props;
+  let {
+    player1,
+    player2,
+    value,
+    setPlayer1,
+    setPlayer2,
+    setValue,
+    doneSetting,
+    setDoneSettings,
+  } = props;
+
   function handleSliderChange(val) {
     setValue(val);
   }
@@ -19,11 +29,14 @@ export default function StartPage(props) {
     e.preventDefault();
     if (!player1 || !player2) {
       showNotification("ENTER PLAYER NAMES");
+    } else {
+      console.log(doneSetting);
+      setDoneSettings(true);
     }
   }
   return (
     <div className="home taller">
-      <form form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Typewriter
           options={{
             strings: ["PLS, ENTER PLAYER NAMES"],
@@ -63,10 +76,16 @@ export default function StartPage(props) {
             max={100}
             value={value}
             onChange={handleSliderChange}
-            renderThumb={(props, state) => (
-              <div {...props}>{state.valueNow}</div>
-            )}
+            renderThumb={(props, state) => {
+              const { key, ...restProps } = props;
+              return (
+                <div key={key} {...restProps}>
+                  {state.valueNow}
+                </div>
+              );
+            }}
           />
+
           <p>slide to select a goal</p>
         </div>
 

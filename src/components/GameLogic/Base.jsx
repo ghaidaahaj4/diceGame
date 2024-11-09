@@ -6,16 +6,15 @@ export default function Base() {
   const [goal, setGoal] = useState(50);
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
-
+  const [doneSettings, setDoneSettings] = useState(false);
   function onClickStartGame() {
     StartGame(true);
   }
-  console.log(goal);
-  console.log(player1);
+
   return (
     <div>
       {!game && <Landing startGame={onClickStartGame} />}
-      {game && (
+      {game && !doneSettings && (
         <StartPage
           player1={player1}
           player2={player2}
@@ -23,8 +22,11 @@ export default function Base() {
           setPlayer1={setPlayer1}
           setPlayer2={setPlayer2}
           setValue={setGoal}
+          doneSetting={doneSettings}
+          setDoneSettings={setDoneSettings}
         />
       )}
+      {doneSettings && <h1>ho</h1>}
     </div>
   );
 }

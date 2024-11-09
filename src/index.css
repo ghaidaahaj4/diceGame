@@ -115,13 +115,21 @@ header {
 .SceneInGame {
   width: 30vw;
   height: 50vh;
-  background-color: #ff0241;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 10px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1vh dotted oklab(72.1% 0.029 0.075);
+  background-image: url("https://img.freepik.com/premium-vector/cartoon-wood-texture-background-vector_490655-454.jpg");
+
+  /* --angle: 45deg; */
+  /* background: linear-gradient(
+    var(--angle),
+    oklab(72.1% 0.029 0.075),
+    oklab(43.5% 0.054 0.063)
+  ); */
 }
 .GameRulles {
   font-family: "Jersey 20", sans-serif;
@@ -228,5 +236,26 @@ form {
   }
   h4 {
     color: gray;
+  }
+}
+
+.ButtonInScene {
+  position: absolute;
+  top: -10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  Button {
+    width: 12vw;
+  }
+}
+.ButtonInScene2 {
+  position: absolute;
+  bottom: -8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  Button {
+    width: 12vw;
   }
 }

@@ -5,8 +5,11 @@ export default function Game() {
   return (
     <div className="home taller game">
       <PlayerInfo />
-      <div className="SceneInGame">
-        <Scene />
+      <div>
+        <div className="SceneInGame">
+          <Scene />
+        </div>
+        <h4>Current Points</h4>
       </div>
       <PlayerInfo />
     </div>

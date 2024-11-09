@@ -5,7 +5,7 @@ import PhysicsProvider from "./PhysicsProvider";
 import Dice from "./Dice";
 import Ground from "./Ground";
 import diceSound from "../../assets/diceSound.mp3";
-
+import "../../index.css";
 const Scene = ({ roll }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [showButton, setShowButton] = useState(true); // Handle button visibility
@@ -65,22 +65,17 @@ const Scene = ({ roll }) => {
         <Environment preset="sunset" />
       </Canvas>
 
-      <div
-        style={{
-          position: "absolute",
-          top: 10,
-          left: "50%",
-          transform: "translateX(-50%)",
-          textAlign: "center",
-        }}
-      >
+      <div className="ButtonInScene">
         {showButton && (
-          <button
-            onClick={handleRollDice}
-            disabled={isRolling}
-            style={{ marginTop: "10px" }}
-          >
+          <button onClick={handleRollDice} disabled={isRolling}>
             Roll Dice
+          </button>
+        )}
+      </div>
+      <div className="ButtonInScene2">
+        {showButton && (
+          <button onClick={console.log("hi")} disabled={isRolling}>
+            HOLD
           </button>
         )}
       </div>

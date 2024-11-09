@@ -3,10 +3,19 @@ import { useBox } from "@react-three/cannon";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
-const Dice = ({ isRolling, setIsRolling, index }) => {
+const Dice = (props) => {
+  const { isRolling, setIsRolling, index, points, setPoints, roll } = props;
   const [key, setKey] = useState(0);
   const [rollingFinished, setRollingFinished] = useState(false);
   const initialX = index === 0 ? -1.5 : 1.5;
+
+  // Only update points after roll finishes
+  useEffect(() => {
+    if (roll !== "auto") {
+      setPoints();
+    }
+  }, [roll, setPoints]);
+
   const [ref, api] = useBox(() => ({
     mass: 1,
     position: [initialX, 2, 0],
@@ -54,7 +63,6 @@ const Dice = ({ isRolling, setIsRolling, index }) => {
       const speed = Math.sqrt(
         velocity[0] ** 2 + velocity[1] ** 2 + velocity[2] ** 2
       );
-
       if (speed < 0.1 && !rollingFinished) {
         const positions = faceCenters.map((center) => {
           const worldPos = new THREE.Vector3();
@@ -75,14 +83,17 @@ const Dice = ({ isRolling, setIsRolling, index }) => {
         const correctedFaceIndex = correctedFaceMapping[upwardFaceIndex];
         console.log("Final upward face:", correctedFaceIndex);
 
-        setRollingFinished(true);
+        // Update points with the correct face index after roll finishes
+        setPoints(correctedFaceIndex);
+
+        setRollingFinished(true); // Set rolling finished flag to prevent multiple updates
       }
     });
 
     return () => {
-      unsubscribeVelocity(); // Clean up to prevent memory leaks
+      unsubscribeVelocity(); // Clean up the subscription on unmount
     };
-  }, [api, rollingFinished, textures]);
+  }, [api, rollingFinished, ref, setPoints]);
 
   return (
     <mesh ref={ref}>

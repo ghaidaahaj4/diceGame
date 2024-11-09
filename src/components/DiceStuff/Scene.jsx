@@ -7,10 +7,9 @@ import Dice from "./Dice";
 import Ground from "./Ground";
 import diceSound from "../../assets/diceSound.mp3";
 import "../../index.css";
-const Scene = ({ roll }) => {
+const Scene = ({ roll, points, setPoints }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [showButton, setShowButton] = useState(true); // Handle button visibility
-
   const handleRollDice = () => {
     setIsRolling(true); // Start rolling
     if (roll !== "auto") {
@@ -57,8 +56,22 @@ const Scene = ({ roll }) => {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <PhysicsProvider>
-          <Dice isRolling={isRolling} setIsRolling={setIsRolling} index={0} />
-          <Dice isRolling={isRolling} setIsRolling={setIsRolling} index={1} />
+          <Dice
+            roll={roll}
+            isRolling={isRolling}
+            setIsRolling={setIsRolling}
+            index={0}
+            points={points}
+            setPoints={setPoints}
+          />
+          <Dice
+            roll={roll}
+            isRolling={isRolling}
+            setIsRolling={setIsRolling}
+            index={1}
+            points={points}
+            setPoints={setPoints}
+          />
           <Ground />
         </PhysicsProvider>
         <OrbitControls enableZoom={false} enableRotate={false} />

@@ -9,21 +9,36 @@ export default function Game({ player1, player2, value }) {
   const [turn, setTurn] = useState(true); // player 1 turn
   const [p1points, setP1Points] = useState(0);
   const [p2points, setP2Points] = useState(0);
-  const [countroll, setCOuntRoll] = useState(0);
+  const [countroll, setCountRoll] = useState(0);
 
+  // Handle countroll and reset when it reaches 5
   function handleCountRoll() {
-    setCOuntRoll((prev) => prev + 1);
+    setCountRoll((prev) => {
+      const newCount = prev + 1;
+      if (newCount === 5) {
+        // Reset countroll and change turn when it reaches 5
+        onClickHold();
+        setCurrent(0);
+        setMySet(new Set());
+        setIsTwice(0);
+        setTurn((prevTurn) => !prevTurn);
+        return 0;
+      }
+      return newCount;
+    });
     console.log(countroll);
   }
 
   useEffect(() => {
-    // Check for win condition whenever p1points or p2points change
     if (p1points >= value) {
       alert(player1 + " is the winner");
+      window.location.href = "/";
     } else if (p2points >= value) {
       alert(player2 + " is the winner");
+      window.location.href = "/";
     }
   }, [p1points, p2points, player1, player2, value]);
+
   useEffect(() => {
     console.log("Turn changed to: ", turn ? player1 : player2);
   }, [turn]);
@@ -59,9 +74,7 @@ export default function Game({ player1, player2, value }) {
           if (mySet.has(val)) {
             setCurrent(0);
             setMySet(new Set());
-
             setTurn((prev) => !prev);
-
             return 0;
           }
           setMySet(new Set());
@@ -93,7 +106,12 @@ export default function Game({ player1, player2, value }) {
       </div>
       <div className="VarsIngams">
         <h4>Current Points: {current}</h4>
-        <h2>GOAL {value}</h2>
+        <div>
+          <h2>GOAL {value}</h2>
+
+          <h3> rolls left {5 - countroll}</h3>
+        </div>
+
         <h4>Turn: {turn ? player1 : player2}</h4>
       </div>
     </div>

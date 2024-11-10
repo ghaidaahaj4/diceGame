@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import PlayerInfo from "./PlayerInfo";
 import Scene from "../DiceStuff/Scene";
 
@@ -7,21 +7,33 @@ export default function Game() {
   const [mySet, setMySet] = useState(new Set());
   const [isTwice, setIsTwice] = useState(0);
 
-  console.log(mySet);
+  // Track render count
+  const renderCount = useRef(0);
+
+  useEffect(() => {
+    renderCount.current += 1;
+    console.log("Render count:", renderCount.current);
+
+    // Reset mySet when renderCount reaches 2
+    if (renderCount.current === 2) {
+      setMySet(new Set());
+    }
+  }, []); // Only run once on mount
 
   function updatePoints(val) {
     if (typeof val === "number" && !isNaN(val)) {
       setCurrent((prev) => prev + val);
+
       setIsTwice((prev) => {
         if (prev === 1) {
           if (mySet.has(val)) {
             setCurrent(0);
-            setMySet(new Set());
-            return 0; // Reset isTwice counter
-          } else {
-            setMySet((prevSet) => new Set(prevSet).add(val));
+            return 0;
           }
+          setMySet(new Set());
           return 0; // Reset after checking twice
+        } else {
+          setMySet((prevSet) => new Set(prevSet).add(val));
         }
         return prev + 1; // Otherwise, increment normally
       });
@@ -31,9 +43,6 @@ export default function Game() {
     }
     console.log("isTwice:", isTwice);
   }
-  // useEffect(() => {
-  //   console.log("Updated current points:", current);
-  // }, [current]);
 
   return (
     <div className="home taller game">

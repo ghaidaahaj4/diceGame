@@ -9,15 +9,6 @@ const Dice = (props) => {
   const [rollingFinished, setRollingFinished] = useState(false);
   const initialX = index === 0 ? -1.5 : 1.5;
 
-  // Track render count
-  const renderCount = useRef(0);
-
-  // Increment render count on each render
-  useEffect(() => {
-    renderCount.current += 1;
-    console.log("Render count:", renderCount.current);
-  });
-
   // Only update points after roll finishes
   useEffect(() => {
     if (roll !== "auto") {
@@ -93,7 +84,7 @@ const Dice = (props) => {
         // console.log("Final upward face:", correctedFaceIndex);
 
         // Update points with the correct face index after roll finishes
-        if (roll !== "auto" && renderCount != 2) {
+        if (roll !== "auto") {
           setPoints(correctedFaceIndex);
         }
 

@@ -4,15 +4,19 @@ import Scene from "../DiceStuff/Scene";
 
 export default function Game() {
   const [current, setCurrent] = useState(-6);
+  const [mySet, setMySet] = useState(new Set());
 
-  // Function to update current points
-  function setCurrentPoints(val) {
-    // Ensure val is a number before adding
+  function updatePoints(val) {
     if (typeof val === "number" && !isNaN(val)) {
       setCurrent((prev) => prev + val);
-      console.log("Adding value: " + val);
+      setMySet((prevSet) => {
+        const newSet = new Set(prevSet);
+        newSet.add(val);
+        return newSet;
+      });
+      console.log("Adding value:", val);
     } else {
-      console.error("Invalid value:", val); // Log an error if val is not a valid number
+      console.error("Invalid value:", val);
     }
   }
 
@@ -20,12 +24,17 @@ export default function Game() {
     console.log("Updated current points:", current);
   }, [current]);
 
+  // Log whenever 'mySet' changes
+  useEffect(() => {
+    console.log("Updated set values:", Array.from(mySet));
+  }, [mySet]);
+
   return (
     <div className="home taller game">
       <PlayerInfo />
       <div>
         <div className="SceneInGame">
-          <Scene roll={""} points={current} setPoints={setCurrentPoints} />
+          <Scene roll={""} points={current} setPoints={updatePoints} />
         </div>
         <h4>Current Points: {current}</h4>
       </div>

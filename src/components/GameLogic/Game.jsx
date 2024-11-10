@@ -10,16 +10,14 @@ export default function Game({ player1, player2, value }) {
   const [p1points, setP1Points] = useState(0);
   const [p2points, setP2Points] = useState(0);
 
-  // Check for win condition whenever p1points or p2points change
   useEffect(() => {
+    // Check for win condition whenever p1points or p2points change
     if (p1points >= value) {
       alert(player1 + " is the winner");
     } else if (p2points >= value) {
       alert(player2 + " is the winner");
     }
   }, [p1points, p2points, player1, player2, value]);
-
-  // Log turn change
   useEffect(() => {
     console.log("Turn changed to: ", turn ? player1 : player2);
   }, [turn]);
@@ -27,10 +25,11 @@ export default function Game({ player1, player2, value }) {
   function onClickHold() {
     if (turn === true) {
       setP1Points((prev) => prev + current);
+      setTurn(false);
     } else {
       setP2Points((prev) => prev + current);
+      setTurn(true);
     }
-    setTurn((prev) => !prev); // Set turn after updating points
     setCurrent(0);
     setMySet(new Set());
     setIsTwice(0);
@@ -54,7 +53,9 @@ export default function Game({ player1, player2, value }) {
           if (mySet.has(val)) {
             setCurrent(0);
             setMySet(new Set());
+            console.log(turn);
             setTurn((prev) => !prev);
+            console.log("updated");
             return 0;
           }
           setMySet(new Set());

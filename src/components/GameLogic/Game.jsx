@@ -105,14 +105,20 @@ export default function Game({ player1, player2, value }) {
         <PlayerInfo name={player2} points={p2points} />
       </div>
       <div className="VarsIngams">
-        <h4>Current Points: {current}</h4>
+        <div>
+          <h4>Current Points:</h4>
+          {current}
+        </div>
+
         <div>
           <h2>GOAL {value}</h2>
 
           <h3> rolls left {5 - countroll}</h3>
         </div>
-
-        <h4>Turn: {turn ? player1 : player2}</h4>
+        <div>
+          <h4>Turn: </h4>
+          {turn ? player1 : player2}
+        </div>
       </div>
     </div>
   );

@@ -194,6 +194,7 @@ input[type="text"]:focus {
 }
 .taller {
   height: 70vh;
+  width: fit-content;
   button {
     height: 10vh;
     width: 40vw;
@@ -258,4 +259,16 @@ form {
   Button {
     width: 12vw;
   }
+}
+.VarsIngams {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  margin-top: 2%;
+  width: 100%;
+  gap: 33%;
+}
+.col {
+  display: flex;
+  flex-direction: column;
 }

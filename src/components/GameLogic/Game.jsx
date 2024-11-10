@@ -6,7 +6,29 @@ export default function Game({ player1, player2, value }) {
   const [current, setCurrent] = useState(-6);
   const [mySet, setMySet] = useState(new Set());
   const [isTwice, setIsTwice] = useState(0);
+  const [turn, setTurn] = useState(true); // player 1 turn
   console.log(value);
+  const [p1points, setP1Points] = useState(0);
+  const [p2points, setP2Points] = useState(0);
+
+  function onClickHold() {
+    if (turn === true) {
+      setP1Points((prev) => prev + current);
+      if (p1points >= value) {
+        alert(player1 + "is the winner");
+      }
+      setTurn(false);
+    } else {
+      setP2Points((prev) => prev + current);
+      setTurn(true);
+      if (p2points >= value) {
+        alert(player2 + "is the winner");
+      }
+    }
+    setCurrent(0);
+    setMySet(new Set());
+    setIsTwice(0);
+  }
   // Track render count
   const renderCount = useRef(0);
 
@@ -26,6 +48,7 @@ export default function Game({ player1, player2, value }) {
           if (mySet.has(val)) {
             setCurrent(0);
             setMySet(new Set());
+            setTurn((prev) => !prev);
             return 0;
           }
           setMySet(new Set());
@@ -39,16 +62,27 @@ export default function Game({ player1, player2, value }) {
   }
 
   return (
-    <div className="home taller game">
-      <PlayerInfo name={player1} />
-      <div>
-        <div className="SceneInGame">
-          <Scene roll={""} points={current} setPoints={updatePoints} />
+    <div className="home taller col">
+      <div className="game">
+        <PlayerInfo name={player1} points={p1points} />
+        <div>
+          <div className="SceneInGame">
+            <Scene
+              roll={""}
+              points={current}
+              setPoints={updatePoints}
+              onClickHold={onClickHold}
+            />
+          </div>
         </div>
+        <PlayerInfo name={player2} points={p2points} />
+      </div>
+      <div className="VarsIngams">
         <h4>Current Points: {current}</h4>
         <h2>GOAL {value}</h2>
+        <h4> turn {turn == false ? player2 : player1}</h4>
       </div>
-      <PlayerInfo name={player2} />
+      ;
     </div>
   );
 }

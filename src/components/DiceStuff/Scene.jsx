@@ -7,7 +7,7 @@ import Dice from "./Dice";
 import Ground from "./Ground";
 import diceSound from "../../assets/diceSound.mp3";
 import "../../index.css";
-const Scene = ({ roll, points, setPoints }) => {
+const Scene = ({ roll, points, setPoints, onClickHold }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [showButton, setShowButton] = useState(true); // Handle button visibility
   const handleRollDice = () => {
@@ -86,7 +86,11 @@ const Scene = ({ roll, points, setPoints }) => {
         )}
       </div>
       <div className="ButtonInScene2">
-        {showButton && <button disabled={isRolling}>HOLD</button>}
+        {showButton && (
+          <button disabled={isRolling} onClick={onClickHold}>
+            HOLD
+          </button>
+        )}
       </div>
     </div>
   );

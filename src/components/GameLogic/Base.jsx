@@ -11,6 +11,7 @@ export default function Base() {
   function onClickStartGame() {
     StartGame(true);
   }
+  console.log("plaaaaayer" + player1);
 
   return (
     <div>
@@ -27,7 +28,9 @@ export default function Base() {
           setDoneSettings={setDoneSettings}
         />
       )}
-      {doneSettings && <Game first={true} />}
+      {doneSettings && (
+        <Game player1={player1} player2={player2} value={goal} />
+      )}
     </div>
   );
 }

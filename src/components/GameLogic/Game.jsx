@@ -2,11 +2,12 @@ import { useRef, useState, useEffect } from "react";
 import PlayerInfo from "./PlayerInfo";
 import Scene from "../DiceStuff/Scene";
 
-export default function Game() {
+export default function Game({ player1, player2, val }) {
   const [current, setCurrent] = useState(-6);
   const [mySet, setMySet] = useState(new Set());
   const [isTwice, setIsTwice] = useState(0);
 
+  console.log(player1 + "ppp");
   // Track render count
   const renderCount = useRef(0);
 
@@ -46,14 +47,14 @@ export default function Game() {
 
   return (
     <div className="home taller game">
-      <PlayerInfo />
+      <PlayerInfo name={player1} />
       <div>
         <div className="SceneInGame">
           <Scene roll={""} points={current} setPoints={updatePoints} />
         </div>
         <h4>Current Points: {current}</h4>
       </div>
-      <PlayerInfo />
+      <PlayerInfo name={player2} />
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function Base() {
           setDoneSettings={setDoneSettings}
         />
       )}
-      {doneSettings && <Game />}
+      {doneSettings && <Game first={true} />}
     </div>
   );
 }

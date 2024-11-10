@@ -5,29 +5,35 @@ import Scene from "../DiceStuff/Scene";
 export default function Game() {
   const [current, setCurrent] = useState(-6);
   const [mySet, setMySet] = useState(new Set());
+  const [isTwice, setIsTwice] = useState(0);
+
+  console.log(mySet);
 
   function updatePoints(val) {
     if (typeof val === "number" && !isNaN(val)) {
       setCurrent((prev) => prev + val);
-      setMySet((prevSet) => {
-        const newSet = new Set(prevSet);
-        newSet.add(val);
-        return newSet;
+      setIsTwice((prev) => {
+        if (prev === 1) {
+          if (mySet.has(val)) {
+            setCurrent(0);
+            setMySet(new Set());
+            return 0; // Reset isTwice counter
+          } else {
+            setMySet((prevSet) => new Set(prevSet).add(val));
+          }
+          return 0; // Reset after checking twice
+        }
+        return prev + 1; // Otherwise, increment normally
       });
-      console.log("Adding value:", val);
-    } else {
-      console.error("Invalid value:", val);
+
+      console.log("Current:", current);
+      console.log("Set:", mySet);
     }
+    console.log("isTwice:", isTwice);
   }
-
-  useEffect(() => {
-    console.log("Updated current points:", current);
-  }, [current]);
-
-  // Log whenever 'mySet' changes
-  useEffect(() => {
-    console.log("Updated set values:", Array.from(mySet));
-  }, [mySet]);
+  // useEffect(() => {
+  //   console.log("Updated current points:", current);
+  // }, [current]);
 
   return (
     <div className="home taller game">

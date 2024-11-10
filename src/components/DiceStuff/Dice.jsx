@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useBox } from "@react-three/cannon";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -8,6 +8,15 @@ const Dice = (props) => {
   const [key, setKey] = useState(0);
   const [rollingFinished, setRollingFinished] = useState(false);
   const initialX = index === 0 ? -1.5 : 1.5;
+
+  // Track render count
+  const renderCount = useRef(0);
+
+  // Increment render count on each render
+  useEffect(() => {
+    renderCount.current += 1;
+    console.log("Render count:", renderCount.current);
+  });
 
   // Only update points after roll finishes
   useEffect(() => {
@@ -81,10 +90,12 @@ const Dice = (props) => {
         }
 
         const correctedFaceIndex = correctedFaceMapping[upwardFaceIndex];
-        console.log("Final upward face:", correctedFaceIndex);
+        // console.log("Final upward face:", correctedFaceIndex);
 
         // Update points with the correct face index after roll finishes
-        setPoints(correctedFaceIndex);
+        if (roll !== "auto" && renderCount != 2) {
+          setPoints(correctedFaceIndex);
+        }
 
         setRollingFinished(true); // Set rolling finished flag to prevent multiple updates
       }

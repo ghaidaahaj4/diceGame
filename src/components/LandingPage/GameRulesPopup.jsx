@@ -33,8 +33,8 @@ export default function GameRulesPopup({ isOpen, togglePopup }) {
             turn, adding each roll's total to their round score.
           </li>
           <li>
-            Double Six Penalty: Rolling double sixes causes the player to lose
-            their entire round score.
+            Double Penalty: Rolling a double causes the player to lose their
+            entire round score.
           </li>
           <li>
             'Hold' Option: Players can choose to 'Hold,' adding their round

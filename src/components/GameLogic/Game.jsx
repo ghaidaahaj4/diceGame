@@ -14,12 +14,10 @@ export default function Game({ player1, player2, val }) {
   useEffect(() => {
     renderCount.current += 1;
     console.log("Render count:", renderCount.current);
-
-    // Reset mySet when renderCount reaches 2
     if (renderCount.current === 2) {
       setMySet(new Set());
     }
-  }, []); // Only run once on mount
+  }, []);
 
   function updatePoints(val) {
     if (typeof val === "number" && !isNaN(val)) {
@@ -29,10 +27,11 @@ export default function Game({ player1, player2, val }) {
         if (prev === 1) {
           if (mySet.has(val)) {
             setCurrent(0);
+            setMySet(new Set());
             return 0;
           }
           setMySet(new Set());
-          return 0; // Reset after checking twice
+          return 0;
         } else {
           setMySet((prevSet) => new Set(prevSet).add(val));
         }
@@ -53,6 +52,7 @@ export default function Game({ player1, player2, val }) {
           <Scene roll={""} points={current} setPoints={updatePoints} />
         </div>
         <h4>Current Points: {current}</h4>
+        <h2>GOAL</h2>
       </div>
       <PlayerInfo name={player2} />
     </div>

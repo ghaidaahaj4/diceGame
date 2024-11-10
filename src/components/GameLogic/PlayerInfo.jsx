@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function PlayerInfo({ name }) {
-  console.log("name" + name);
   return (
     <div className="home smaller">
       <h2>Player Name : {name}</h2>

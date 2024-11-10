@@ -11,8 +11,6 @@ export default function Base() {
   function onClickStartGame() {
     StartGame(true);
   }
-  console.log("plaaaaayer" + player1);
-
   return (
     <div>
       {!game && <Landing startGame={onClickStartGame} />}

@@ -2,18 +2,16 @@ import { useRef, useState, useEffect } from "react";
 import PlayerInfo from "./PlayerInfo";
 import Scene from "../DiceStuff/Scene";
 
-export default function Game({ player1, player2, val }) {
+export default function Game({ player1, player2, value }) {
   const [current, setCurrent] = useState(-6);
   const [mySet, setMySet] = useState(new Set());
   const [isTwice, setIsTwice] = useState(0);
-
-  console.log(player1 + "ppp");
+  console.log(value);
   // Track render count
   const renderCount = useRef(0);
 
   useEffect(() => {
     renderCount.current += 1;
-    console.log("Render count:", renderCount.current);
     if (renderCount.current === 2) {
       setMySet(new Set());
     }
@@ -37,11 +35,7 @@ export default function Game({ player1, player2, val }) {
         }
         return prev + 1; // Otherwise, increment normally
       });
-
-      console.log("Current:", current);
-      console.log("Set:", mySet);
     }
-    console.log("isTwice:", isTwice);
   }
 
   return (
@@ -52,7 +46,7 @@ export default function Game({ player1, player2, val }) {
           <Scene roll={""} points={current} setPoints={updatePoints} />
         </div>
         <h4>Current Points: {current}</h4>
-        <h2>GOAL</h2>
+        <h2>GOAL {value}</h2>
       </div>
       <PlayerInfo name={player2} />
     </div>

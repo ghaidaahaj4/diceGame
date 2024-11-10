@@ -9,6 +9,12 @@ export default function Game({ player1, player2, value }) {
   const [turn, setTurn] = useState(true); // player 1 turn
   const [p1points, setP1Points] = useState(0);
   const [p2points, setP2Points] = useState(0);
+  const [countroll, setCOuntRoll] = useState(0);
+
+  function handleCountRoll() {
+    setCOuntRoll((prev) => prev + 1);
+    console.log(countroll);
+  }
 
   useEffect(() => {
     // Check for win condition whenever p1points or p2points change
@@ -53,9 +59,9 @@ export default function Game({ player1, player2, value }) {
           if (mySet.has(val)) {
             setCurrent(0);
             setMySet(new Set());
-            console.log(turn);
+
             setTurn((prev) => !prev);
-            console.log("updated");
+
             return 0;
           }
           setMySet(new Set());
@@ -79,6 +85,7 @@ export default function Game({ player1, player2, value }) {
               points={current}
               setPoints={updatePoints}
               onClickHold={onClickHold}
+              setCount={handleCountRoll}
             />
           </div>
         </div>

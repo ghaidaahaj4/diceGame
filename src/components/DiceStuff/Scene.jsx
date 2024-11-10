@@ -7,12 +7,16 @@ import Dice from "./Dice";
 import Ground from "./Ground";
 import diceSound from "../../assets/diceSound.mp3";
 import "../../index.css";
-const Scene = ({ roll, points, setPoints, onClickHold }) => {
+const Scene = (props) => {
+  const { roll, points, setPoints, onClickHold, setCount } = props;
+
   const [isRolling, setIsRolling] = useState(false);
+
   const [showButton, setShowButton] = useState(true); // Handle button visibility
   const handleRollDice = () => {
     setIsRolling(true); // Start rolling
     if (roll !== "auto") {
+      setCount((prev) => prev + 1);
       new Audio(diceSound).play();
     }
     setTimeout(() => {

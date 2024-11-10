@@ -7,29 +7,35 @@ export default function Game({ player1, player2, value }) {
   const [mySet, setMySet] = useState(new Set());
   const [isTwice, setIsTwice] = useState(0);
   const [turn, setTurn] = useState(true); // player 1 turn
-  console.log(value);
   const [p1points, setP1Points] = useState(0);
   const [p2points, setP2Points] = useState(0);
+
+  // Check for win condition whenever p1points or p2points change
+  useEffect(() => {
+    if (p1points >= value) {
+      alert(player1 + " is the winner");
+    } else if (p2points >= value) {
+      alert(player2 + " is the winner");
+    }
+  }, [p1points, p2points, player1, player2, value]);
+
+  // Log turn change
+  useEffect(() => {
+    console.log("Turn changed to: ", turn ? player1 : player2);
+  }, [turn]);
 
   function onClickHold() {
     if (turn === true) {
       setP1Points((prev) => prev + current);
-      if (p1points >= value) {
-        alert(player1 + "is the winner");
-      }
-      setTurn(false);
     } else {
       setP2Points((prev) => prev + current);
-      setTurn(true);
-      if (p2points >= value) {
-        alert(player2 + "is the winner");
-      }
     }
+    setTurn((prev) => !prev); // Set turn after updating points
     setCurrent(0);
     setMySet(new Set());
     setIsTwice(0);
   }
-  // Track render count
+
   const renderCount = useRef(0);
 
   useEffect(() => {
@@ -56,7 +62,7 @@ export default function Game({ player1, player2, value }) {
         } else {
           setMySet((prevSet) => new Set(prevSet).add(val));
         }
-        return prev + 1; // Otherwise, increment normally
+        return prev + 1;
       });
     }
   }
@@ -80,9 +86,8 @@ export default function Game({ player1, player2, value }) {
       <div className="VarsIngams">
         <h4>Current Points: {current}</h4>
         <h2>GOAL {value}</h2>
-        <h4> turn {turn == false ? player2 : player1}</h4>
+        <h4>Turn: {turn ? player1 : player2}</h4>
       </div>
-      ;
     </div>
   );
 }
